@@ -1,31 +1,18 @@
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import configuration.DatabaseConnection;
+import java.util.List;
+
+import controller.CrudExampleController;
+import dto.CrudExampleDTO;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        DatabaseConnection dbConnection = new DatabaseConnection();
+        CrudExampleController crudExampleController = new CrudExampleController();
 
-        try {
-            // Ejemplo de lectura
-            ResultSet rs = dbConnection.executeQuery("SELECT * FROM tu_tabla");
-            while (rs.next()) {
-                System.out.println("ID: " + rs.getInt("id") + ", Nombre: " + rs.getString("nombre"));
-            }
+         List<CrudExampleDTO> examples = crudExampleController.getAll();
 
-            // Ejemplo de escritura
-            int rowsAffected = dbConnection.executeUpdate("INSERT INTO tu_tabla (nombre) VALUES ('Nuevo Nombre')");
-            System.out.println("Filas afectadas: " + rowsAffected);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                dbConnection.closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+         for(CrudExampleDTO example: examples) {
+            System.out.println("ID: " + example.getId());
+            System.out.println("Nombre: " + example.getId());
+         }
     }
 }
